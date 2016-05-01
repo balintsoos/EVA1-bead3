@@ -15,7 +15,7 @@ CREATE TABLE movie(
   main_characters VARCHAR(50),
   director VARCHAR(40),
   distributor VARCHAR(40),
-  release Date,
+  release_date Date,
   available INTEGER NOT NULL
 );
 
@@ -36,6 +36,8 @@ CREATE TABLE rent(
 insert into member(name, address, phone) values('Balint Soos', 'Budapest', '+36 20 111 1111');
 insert into member(name, address, phone) values('John Smith', 'Los Angeles', '(213) 974-3211');
 
-insert into movie(title, main_characters, director, distributor, release, available) values('Star Wars', 'Mark Hamill - Harrison Ford - Carrie Fisher', 'George Lucas', '20th Century Fox', '1977-05-25', 1);
+insert into movie(title, main_characters, director, distributor, release_date, available)
+  values('Star Wars', 'Mark Hamill, Harrison Ford, Carrie Fisher', 'George Lucas', '20th Century Fox', '1977-05-25', 1);
 
-insert into movie(title, main_characters, director, distributor, release, available) values('The Prestige', 'Christian Bale - Hugh Jackman', 'Christopher Nolan', 'Warner Bros. Pictures', '2006-10-20', 1);
+insert into movie(title, main_characters, director, distributor, release_date, available)
+  values('The Prestige', 'Christian Bale, Hugh Jackman', 'Christopher Nolan', 'Warner Bros. Pictures', '2006-10-20', 1);
