@@ -7,6 +7,8 @@ TEMPLATE = app
 
 
 SOURCES += \
-    main.cpp
+    main.cpp \
+    editordialog.cpp
 
-HEADERS  +=
+HEADERS  += \
+    editordialog.h
