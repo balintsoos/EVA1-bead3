@@ -1,8 +1,9 @@
 #include <QApplication>
-#include <QMessageBox>
 #include <QSqlDatabase>
-
-#include <QDebug>
+#include <QSqlQuery>
+#include <QSqlQueryModel>
+#include <QTableView>
+#include <QMessageBox>
 
 int main(int argc, char *argv[])
 {
@@ -17,9 +18,16 @@ int main(int argc, char *argv[])
 
     if (db.open())
     {
-        qDebug() << "lol...";
-        db.close();
+        QSqlQueryModel *model = new QSqlQueryModel;
+        model->setQuery("select * from movie");
 
+        QTableView *view = new QTableView;
+        view->setModel(model);
+        view->setWindowTitle(QObject::trUtf8("Movies"));
+        view->setMinimumSize(800,300);
+        view->show();
+
+        db.close();
     }
     else
     {
