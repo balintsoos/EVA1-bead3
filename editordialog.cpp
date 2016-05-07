@@ -2,6 +2,7 @@
 #include <QSqlError>
 #include <QSqlRelationalDelegate>
 
+#include "moviedelegate.h"
 #include "editordialog.h"
 
 EditorDialog::EditorDialog(QWidget *parent) : QDialog(parent)
@@ -85,7 +86,6 @@ void EditorDialog::setupModel()
     _model->setHeaderData(5, Qt::Horizontal, trUtf8("Release date"));
     _model->setHeaderData(6, Qt::Horizontal, trUtf8("Available"));
 
-    //_model->setRelation(2, QSqlRelation("city", "id", "name"));
     _model->select();
 }
 
@@ -119,7 +119,7 @@ void EditorDialog::setupUi()
     _tableView->setModel(_model);
     _tableView->setSelectionBehavior(QAbstractItemView::SelectItems);
     _tableView->resizeColumnsToContents();
-    _tableView->setItemDelegate(new QSqlRelationalDelegate());
+    _tableView->setItemDelegate(new MovieDelegate());
 
     _tableView->setColumnHidden(0, true);
 

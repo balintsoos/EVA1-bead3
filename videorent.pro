@@ -8,7 +8,9 @@ TEMPLATE = app
 
 SOURCES += \
     main.cpp \
-    editordialog.cpp
+    editordialog.cpp \
+    moviedelegate.cpp
 
 HEADERS  += \
-    editordialog.h
+    editordialog.h \
+    moviedelegate.h
