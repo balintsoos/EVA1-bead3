@@ -84,7 +84,7 @@ void EditorDialog::setupModel()
     _model->setHeaderData(3, Qt::Horizontal, trUtf8("Director"));
     _model->setHeaderData(4, Qt::Horizontal, trUtf8("Distributor"));
     _model->setHeaderData(5, Qt::Horizontal, trUtf8("Release date"));
-    _model->setHeaderData(6, Qt::Horizontal, trUtf8("Available"));
+    _model->setHeaderData(6, Qt::Horizontal, trUtf8("Availability"));
 
     _model->select();
 }
