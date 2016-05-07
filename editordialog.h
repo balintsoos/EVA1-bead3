@@ -40,7 +40,7 @@ private:
     QPushButton* _revertButton;
 
     // Layout
-    QVBoxLayout* mainLayout;
+    QVBoxLayout* _mainLayout;
 };
 
 #endif // EDITORDIALOG_H

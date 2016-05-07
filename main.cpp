@@ -1,9 +1,7 @@
 #include <QApplication>
 #include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlQueryModel>
-#include <QTableView>
 #include <QMessageBox>
+#include "editordialog.h"
 
 int main(int argc, char *argv[])
 {
@@ -18,20 +16,14 @@ int main(int argc, char *argv[])
 
     if (db.open())
     {
-        QSqlQueryModel *model = new QSqlQueryModel;
-        model->setQuery("select * from movie");
-
-        QTableView *view = new QTableView;
-        view->setModel(model);
-        view->setWindowTitle(QObject::trUtf8("Movies"));
-        view->setMinimumSize(800,300);
-        view->show();
-
         db.close();
+
+        EditorDialog* editor = new EditorDialog();
+        editor->show();
     }
     else
     {
-        QMessageBox::critical(0, QObject::trUtf8("Database Error"), QObject::trUtf8("Connection error occured"));
+        QMessageBox::critical(0, "Database Error", "Connection error occured");
     }
 
     return a.exec();
