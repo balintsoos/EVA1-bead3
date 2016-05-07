@@ -2,6 +2,7 @@
 #define EDITORDIALOG_H
 
 #include <QDialog>
+#include <QSqlRecord>
 #include <QTableView>
 #include <QVBoxLayout>
 #include <QPushButton>

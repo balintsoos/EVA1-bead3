@@ -5,13 +5,13 @@ USE videorentdb;
 CREATE TABLE member(
   id INTEGER PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(30) NOT NULL,
-  address VARCHAR(40) NOT NULL,
-  phone VARCHAR(20) NOT NULL
+  address VARCHAR(40),
+  phone VARCHAR(20)
 );
 
 CREATE TABLE movie(
   id INTEGER PRIMARY KEY AUTO_INCREMENT,
-  title VARCHAR(40),
+  title VARCHAR(40) NOT NULL,
   main_characters VARCHAR(50),
   director VARCHAR(40),
   distributor VARCHAR(40),
