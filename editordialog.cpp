@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QMessageBox>
 #include <QSqlError>
 #include <QSqlRelationalDelegate>
@@ -35,7 +36,7 @@ void EditorDialog::addButton_Clicked()
     _model->setData(_model->index(row, 1), "untitled");
     _model->setData(_model->index(row, 6), 1);
 
-    QModelIndex newIndex = _model->index(row, 0);
+    QModelIndex newIndex = _model->index(row, 1);
     _tableView->setCurrentIndex(newIndex);
     _tableView->edit(newIndex);
 }
@@ -46,8 +47,17 @@ void EditorDialog::removeButton_Clicked()
 
     if (index.isValid())
     {
-        _model->removeRow(index.row());
-        _tableView->setCurrentIndex(_model->index(index.row() - 1, 0));
+        QModelIndex availableCellIndex = _model->index(index.row(), 6);
+
+        if (_model->data(availableCellIndex) == 1)
+        {
+            _model->removeRow(index.row());
+            _tableView->setCurrentIndex(_model->index(index.row() - 1, 1));
+        }
+        else
+        {
+            QMessageBox::warning(this, "Item Locked", "Selected item is locked");
+        }
     }
     else
     {
