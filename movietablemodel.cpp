@@ -1,6 +1,7 @@
 #include <QMessageBox>
 #include <QSqlQuery>
 #include <QSqlRecord>
+#include <QDebug>
 
 #include "movietablemodel.h"
 
@@ -17,8 +18,8 @@ MovieTableModel::MovieTableModel(QObject *parent) :
     setHeaderData(3, Qt::Horizontal, trUtf8("Director"));
     setHeaderData(4, Qt::Horizontal, trUtf8("Distributor"));
     setHeaderData(5, Qt::Horizontal, trUtf8("Release date"));
-    setHeaderData(6, Qt::Horizontal, trUtf8("Availability"));
-    setHeaderData(7, Qt::Horizontal, trUtf8("Rented"));
+    setHeaderData(6, Qt::Horizontal, trUtf8("Status"));
+    setHeaderData(7, Qt::Horizontal, trUtf8("Availability"));
 }
 
 void MovieTableModel::insertRow(int row)
@@ -46,15 +47,24 @@ QVariant MovieTableModel::data(const QModelIndex &index, int role) const
     {
         QSqlQuery query;
 
-        query.exec("select count(*) from rent where movie_id = " + this->data(this->index(index.row(), 0)).toString());
+        QString movie_id = this->data(this->index(index.row(), 0)).toString();
+
+        query.exec("select count(*) from rent where DATE(start_date) <= NOW() and end_date IS NULL and movie_id = " + movie_id);
 
         if (query.next())
         {
-            return QVariant(query.value(0).toInt());
+            if (query.value(0).toInt() == 0)
+            {
+                return QVariant("In Stock");
+            }
+            else
+            {
+                return QVariant("Rented");
+            }
         }
         else
         {
-            return QVariant(0);
+            QMessageBox::critical(0, "Query Error", "Query result error: no lines");
         }
     }
     else

@@ -117,6 +117,7 @@ void EditorDialog::setupUi()
     _tableView->setModel(_model);
     _tableView->setSelectionBehavior(QAbstractItemView::SelectItems);
     _tableView->resizeColumnsToContents();
+    _tableView->setColumnWidth(6, 80);
     _tableView->setItemDelegate(new MovieDelegate());
 
     _tableView->setColumnHidden(0, true);

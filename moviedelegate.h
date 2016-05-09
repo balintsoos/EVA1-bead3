@@ -16,7 +16,8 @@ public:
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
 private:
-    QStringList availableValueList() const;
+    QStringList statusValueList() const;
+    QStringList rentValueList() const;
 };
 
 #endif // MOVIEDELEGATE_H

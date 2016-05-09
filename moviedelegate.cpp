@@ -15,7 +15,7 @@ void MovieDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
 {
     if (index.column() == 6)
     {
-        QString text = availableValueList().at(index.data().toInt());
+        QString text = statusValueList().at(index.data().toInt());
 
         QStyleOptionViewItem optionViewItem = option;
         optionViewItem.displayAlignment = Qt::AlignLeft | Qt::AlignVCenter;
@@ -34,7 +34,7 @@ QWidget *MovieDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem
     if (index.column() == 6)
     {
         QComboBox *availableComboBox = new QComboBox(parent);
-        availableComboBox->addItems(availableValueList());
+        availableComboBox->addItems(statusValueList());
         return availableComboBox;
     }
     else
@@ -70,12 +70,22 @@ void MovieDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, con
     }
 }
 
-QStringList MovieDelegate::availableValueList() const
+QStringList MovieDelegate::statusValueList() const
 {
     QStringList list;
 
     list.append(trUtf8("Locked"));
-    list.append(trUtf8("Available"));
+    list.append(trUtf8("Free"));
+
+    return list;
+}
+
+QStringList MovieDelegate::rentValueList() const
+{
+    QStringList list;
+
+    list.append(trUtf8("In stock"));
+    list.append(trUtf8("Rented"));
 
     return list;
 }
