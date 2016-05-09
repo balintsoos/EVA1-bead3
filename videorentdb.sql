@@ -41,3 +41,5 @@ insert into movie(title, main_characters, director, distributor, release_date, a
 
 insert into movie(title, main_characters, director, distributor, release_date, available)
   values('The Prestige', 'Christian Bale, Hugh Jackman', 'Christopher Nolan', 'Warner Bros. Pictures', '2006-10-20', 1);
+
+insert into rent(member_id, movie_id, start_date, end_date) values(1, 1, NOW(), null);

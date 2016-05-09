@@ -87,7 +87,7 @@ Qt::ItemFlags MovieTableModel::flags (const QModelIndex & index) const
 
         if (value == 1)
         {
-            return Qt::NoItemFlags;
+            return Qt::ItemIsSelectable;
         }
     }
 

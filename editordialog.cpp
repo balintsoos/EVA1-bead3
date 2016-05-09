@@ -1,5 +1,6 @@
 #include <QDebug>
 #include <QMessageBox>
+#include <QSqlQuery>
 #include <QSqlError>
 #include <QSqlRelationalDelegate>
 
@@ -87,6 +88,13 @@ void EditorDialog::rentButton_Clicked()
         }
 
         // Rent the movie
+        QModelIndex idIndex = _model->index(index.row(), 0);
+        QString movie_id = _model->data(idIndex).toString();
+        QSqlQuery query;
+        query.prepare("insert into rent(member_id, movie_id, start_date, end_date) values(:member, :movie, NOW(), null)");
+        query.bindValue(":member", 1);
+        query.bindValue(":movie", movie_id);
+        query.exec();
     }
     else
     {
