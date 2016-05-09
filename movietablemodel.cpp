@@ -61,12 +61,12 @@ QVariant MovieTableModel::data(const QModelIndex &index, int role) const
             }
             else
             {
-                QMessageBox::critical(0, "Query Error", "Query result error: result is bigger than 1");
+                QMessageBox::critical(0, "SQL query Error", "SQL query error: result is bigger than 1");
             }
         }
         else
         {
-            QMessageBox::critical(0, "Query Error", "Query result error: no lines");
+            QMessageBox::critical(0, "SQL query Error", "SQL query error: no lines found");
         }
     }
 
