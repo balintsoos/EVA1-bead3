@@ -9,8 +9,10 @@ TEMPLATE = app
 SOURCES += \
     main.cpp \
     editordialog.cpp \
-    moviedelegate.cpp
+    moviedelegate.cpp \
+    movietablemodel.cpp
 
 HEADERS  += \
     editordialog.h \
-    moviedelegate.h
+    moviedelegate.h \
+    movietablemodel.h

@@ -83,19 +83,7 @@ void EditorDialog::submitButton_Clicked()
 
 void EditorDialog::setupModel()
 {
-    _model = new QSqlRelationalTableModel(this);
-    _model->setTable("movie");
-    _model->setSort(1, Qt::AscendingOrder);
-    _model->setEditStrategy(QSqlTableModel::OnManualSubmit);
-
-    _model->setHeaderData(0, Qt::Horizontal, trUtf8("ID"));
-    _model->setHeaderData(1, Qt::Horizontal, trUtf8("Title"));
-    _model->setHeaderData(2, Qt::Horizontal, trUtf8("Main characters"));
-    _model->setHeaderData(3, Qt::Horizontal, trUtf8("Director"));
-    _model->setHeaderData(4, Qt::Horizontal, trUtf8("Distributor"));
-    _model->setHeaderData(5, Qt::Horizontal, trUtf8("Release date"));
-    _model->setHeaderData(6, Qt::Horizontal, trUtf8("Availability"));
-
+    _model = new MovieTableModel();
     _model->select();
 }
 
@@ -141,5 +129,5 @@ void EditorDialog::setupUi()
 
     // Window
     setWindowTitle("Movies");
-    setFixedSize(850, 300);
+    setFixedSize(900, 300);
 }

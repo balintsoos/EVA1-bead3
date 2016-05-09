@@ -9,6 +9,8 @@
 #include <QDialogButtonBox>
 #include <QSqlRelationalTableModel>
 
+#include "movietablemodel.h"
+
 class EditorDialog : public QDialog
 {
     Q_OBJECT
@@ -26,7 +28,7 @@ private:
     void setupUi();
 
     // Model
-    QSqlRelationalTableModel* _model;
+    MovieTableModel* _model;
 
     // View
     QTableView* _tableView;
