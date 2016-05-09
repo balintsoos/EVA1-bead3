@@ -53,13 +53,15 @@ QVariant MovieTableModel::data(const QModelIndex &index, int role) const
 
         if (query.next())
         {
-            if (query.value(0).toInt() == 0)
+            int result = query.value(0).toInt();
+
+            if (result == 0 || result == 1)
             {
-                return QVariant("In Stock");
+                return QVariant(result);
             }
             else
             {
-                return QVariant("Rented");
+                QMessageBox::critical(0, "Query Error", "Query result error: result is bigger than 1");
             }
         }
         else

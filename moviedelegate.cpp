@@ -23,6 +23,16 @@ void MovieDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
         drawDisplay(painter, optionViewItem, optionViewItem.rect, text);
         drawFocus(painter, optionViewItem, optionViewItem.rect);
     }
+    else if (index.column() == 7)
+    {
+        QString text = rentValueList().at(index.data().toInt());
+
+        QStyleOptionViewItem optionViewItem = option;
+        optionViewItem.displayAlignment = Qt::AlignLeft | Qt::AlignVCenter;
+
+        drawDisplay(painter, optionViewItem, optionViewItem.rect, text);
+        drawFocus(painter, optionViewItem, optionViewItem.rect);
+    }
     else
     {
         QSqlRelationalDelegate::paint(painter, option, index);
