@@ -47,16 +47,15 @@ void EditorDialog::removeButton_Clicked()
 
     if (index.isValid())
     {
-        QModelIndex availableCellIndex = _model->index(index.row(), 6);
+        QModelIndex availableCellIndex = _model->index(index.row(), 7);
 
-        if (_model->data(availableCellIndex) == 1)
+        if (_model->data(availableCellIndex) == 0)
         {
             _model->removeRow(index.row());
-            _tableView->setCurrentIndex(_model->index(index.row() - 1, 1));
         }
         else
         {
-            QMessageBox::warning(this, "Item Locked", "Selected item is locked");
+            QMessageBox::warning(this, "Movie rented", "Selected movie is rented. You can't delete this item.");
         }
     }
     else
@@ -113,14 +112,15 @@ void EditorDialog::setupUi()
     _buttonBox->addButton(_submitButton, QDialogButtonBox::ActionRole);
     _buttonBox->addButton(_revertButton, QDialogButtonBox::ActionRole);
 
+    // View
     _tableView = new QTableView(this);
     _tableView->setModel(_model);
-    _tableView->setSelectionBehavior(QAbstractItemView::SelectItems);
+    _tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     _tableView->resizeColumnsToContents();
-    _tableView->setColumnWidth(6, 85);
     _tableView->setItemDelegate(new MovieDelegate());
-
+    _tableView->setColumnWidth(6, 85);
     _tableView->setColumnHidden(0, true);
+    _tableView->setCurrentIndex(_model->index(0, 1));
 
     // Layout
     _mainLayout = new QVBoxLayout;
