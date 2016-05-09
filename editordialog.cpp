@@ -1,6 +1,4 @@
-#include <QDebug>
 #include <QMessageBox>
-#include <QSqlQuery>
 #include <QSqlError>
 #include <QSqlRelationalDelegate>
 
@@ -87,14 +85,11 @@ void EditorDialog::rentButton_Clicked()
             return;
         }
 
-        // Rent the movie
-        QModelIndex idIndex = _model->index(index.row(), 0);
-        QString movie_id = _model->data(idIndex).toString();
-        QSqlQuery query;
-        query.prepare("insert into rent(member_id, movie_id, start_date, end_date) values(:member, :movie, NOW(), null)");
-        query.bindValue(":member", 1);
-        query.bindValue(":movie", movie_id);
-        query.exec();
+        QModelIndex movieIdIndex = _model->index(index.row(), 0);
+        int movieId = _model->data(movieIdIndex).toInt();
+
+        _userDialog->setMovie(movieId);
+        _userDialog->show();
     }
     else
     {
@@ -163,6 +158,9 @@ void EditorDialog::setupUi()
     _tableView->setColumnWidth(6, 85);
     _tableView->setColumnHidden(0, true);
     _tableView->setCurrentIndex(_model->index(0, 1));
+
+    // User dialog
+    _userDialog = new UserDialog(this);
 
     // Layout
     _mainLayout = new QVBoxLayout;

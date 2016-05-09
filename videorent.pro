@@ -10,9 +10,11 @@ SOURCES += \
     main.cpp \
     editordialog.cpp \
     moviedelegate.cpp \
-    movietablemodel.cpp
+    movietablemodel.cpp \
+    userdialog.cpp
 
 HEADERS  += \
     editordialog.h \
     moviedelegate.h \
-    movietablemodel.h
+    movietablemodel.h \
+    userdialog.h

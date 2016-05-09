@@ -10,6 +10,7 @@
 #include <QSqlRelationalTableModel>
 
 #include "movietablemodel.h"
+#include "userdialog.h"
 
 class EditorDialog : public QDialog
 {
@@ -33,6 +34,9 @@ private:
 
     // View
     QTableView* _tableView;
+
+    // User dialog
+    UserDialog* _userDialog;
 
     // Button box
     QDialogButtonBox* _buttonBox;
