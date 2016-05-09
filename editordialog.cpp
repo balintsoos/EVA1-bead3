@@ -64,6 +64,36 @@ void EditorDialog::removeButton_Clicked()
     }
 }
 
+void EditorDialog::rentButton_Clicked()
+{
+    QModelIndex index = _tableView->currentIndex();
+
+    if (index.isValid())
+    {
+        QModelIndex statusIndex = _model->index(index.row(), 6);
+        QModelIndex availableIndex = _model->index(index.row(), 7);
+
+
+        if (_model->data(statusIndex) == 0)
+        {
+            QMessageBox::warning(this, "Movie locked", "Selected movie is locked. You can't rent this item.");
+            return;
+        }
+
+        if (_model->data(availableIndex) == 1)
+        {
+            QMessageBox::warning(this, "Movie rented", "Selected movie is rented. You can't rent this item.");
+            return;
+        }
+
+        // Rent the movie
+    }
+    else
+    {
+        QMessageBox::warning(this, "No selection", "Select a row before clicking on rent");
+    }
+}
+
 void EditorDialog::submitButton_Clicked()
 {
     _model->database().transaction();
@@ -89,24 +119,28 @@ void EditorDialog::setupModel()
 void EditorDialog::setupUi()
 {
     // Buttons
-    _addButton = new QPushButton("Insert");
+    _addButton = new QPushButton("Add");
     _removeButton = new QPushButton("Remove");
+    _rentButton = new QPushButton("Rent");
     _submitButton = new QPushButton("Submit");
     _revertButton = new QPushButton("Revert");
 
     _addButton->setFocusPolicy(Qt::NoFocus);
     _removeButton->setFocusPolicy(Qt::NoFocus);
+    _rentButton->setFocusPolicy(Qt::NoFocus);
     _submitButton->setFocusPolicy(Qt::NoFocus);
     _revertButton->setFocusPolicy(Qt::NoFocus);
 
     // Button Connect
     connect(_addButton, SIGNAL(clicked()), this, SLOT(addButton_Clicked()));
     connect(_removeButton, SIGNAL(clicked()), this, SLOT(removeButton_Clicked()));
+    connect(_rentButton, SIGNAL(clicked()), this, SLOT(rentButton_Clicked()));
     connect(_submitButton, SIGNAL(clicked()), this, SLOT(submitButton_Clicked()));
     connect(_revertButton, SIGNAL(clicked()), _model, SLOT(revertAll()));
 
     // Button Box
     _buttonBox = new QDialogButtonBox(Qt::Horizontal);
+    _buttonBox->addButton(_rentButton, QDialogButtonBox::ActionRole);
     _buttonBox->addButton(_addButton, QDialogButtonBox::ActionRole);
     _buttonBox->addButton(_removeButton, QDialogButtonBox::ActionRole);
     _buttonBox->addButton(_submitButton, QDialogButtonBox::ActionRole);
