@@ -27,7 +27,7 @@ void MovieTableModel::insertRow(int row)
     QSqlRelationalTableModel::insertRow(row);
 
     // default values
-    setData(index(row, 1), "untitled");;
+    setData(index(row, 1), "untitled");
     setData(index(row, 6), 1);
 }
 
@@ -69,14 +69,32 @@ QVariant MovieTableModel::data(const QModelIndex &index, int role) const
             QMessageBox::critical(0, "Query Error", "Query result error: no lines");
         }
     }
-    else
-    {
-        return QSqlRelationalTableModel::data(index, role);
-    }
+
+    return QSqlRelationalTableModel::data(index, role);
 }
 
 int MovieTableModel::columnCount(const QModelIndex& parent) const
 {
     // increase the number of columns by one
     return QSqlRelationalTableModel::columnCount(parent) + 1;
+}
+
+Qt::ItemFlags MovieTableModel::flags (const QModelIndex & index) const
+{
+    if (index.column() == 6)
+    {
+        int value = this->data(this->index(index.row(), 7)).toInt();
+
+        if (value == 1)
+        {
+            return Qt::NoItemFlags;
+        }
+    }
+
+    if (index.column() == 7)
+    {
+        return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+    }
+
+    return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
 }

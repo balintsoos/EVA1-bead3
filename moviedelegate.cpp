@@ -99,4 +99,3 @@ QStringList MovieDelegate::rentValueList() const
 
     return list;
 }
-
