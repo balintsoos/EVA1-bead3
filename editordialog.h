@@ -23,6 +23,7 @@ private slots:
     void addButton_Clicked();
     void removeButton_Clicked();
     void rentButton_Clicked();
+    void returnButton_Clicked();
     void submitButton_Clicked();
 
 private:
@@ -45,6 +46,7 @@ private:
     QPushButton* _addButton;
     QPushButton* _removeButton;
     QPushButton* _rentButton;
+    QPushButton* _returnButton;
     QPushButton* _submitButton;
     QPushButton* _revertButton;
 

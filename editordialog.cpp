@@ -97,6 +97,36 @@ void EditorDialog::rentButton_Clicked()
     }
 }
 
+void EditorDialog::returnButton_Clicked()
+{
+    QModelIndex index = _tableView->currentIndex();
+
+    if (index.isValid())
+    {
+        QModelIndex availableIndex = _model->index(index.row(), 7);
+
+        if (_model->data(availableIndex) == 0)
+        {
+            QMessageBox::warning(this, "Movie not rented", "Selected movie is not rented. You can't return this item.");
+            return;
+        }
+
+        // Return
+        int movie = _model->data(_model->index(index.row(), 0)).toInt();
+
+        QSqlQuery query;
+        query.prepare("UPDATE rent SET end_date = NOW() WHERE end_date IS NULL and movie_id = :movie");
+
+        query.bindValue(":movie", movie);
+
+        query.exec();
+    }
+    else
+    {
+        QMessageBox::warning(this, "No selection", "Select a row before clicking on return");
+    }
+}
+
 void EditorDialog::submitButton_Clicked()
 {
     _model->database().transaction();
@@ -125,12 +155,14 @@ void EditorDialog::setupUi()
     _addButton = new QPushButton("Add");
     _removeButton = new QPushButton("Remove");
     _rentButton = new QPushButton("Rent");
+    _returnButton = new QPushButton("Return");
     _submitButton = new QPushButton("Submit");
     _revertButton = new QPushButton("Revert");
 
     _addButton->setFocusPolicy(Qt::NoFocus);
     _removeButton->setFocusPolicy(Qt::NoFocus);
     _rentButton->setFocusPolicy(Qt::NoFocus);
+    _returnButton->setFocusPolicy(Qt::NoFocus);
     _submitButton->setFocusPolicy(Qt::NoFocus);
     _revertButton->setFocusPolicy(Qt::NoFocus);
 
@@ -138,12 +170,14 @@ void EditorDialog::setupUi()
     connect(_addButton, SIGNAL(clicked()), this, SLOT(addButton_Clicked()));
     connect(_removeButton, SIGNAL(clicked()), this, SLOT(removeButton_Clicked()));
     connect(_rentButton, SIGNAL(clicked()), this, SLOT(rentButton_Clicked()));
+    connect(_returnButton, SIGNAL(clicked()), this, SLOT(returnButton_Clicked()));
     connect(_submitButton, SIGNAL(clicked()), this, SLOT(submitButton_Clicked()));
     connect(_revertButton, SIGNAL(clicked()), _model, SLOT(revertAll()));
 
     // Button Box
     _buttonBox = new QDialogButtonBox(Qt::Horizontal);
     _buttonBox->addButton(_rentButton, QDialogButtonBox::ActionRole);
+    _buttonBox->addButton(_returnButton, QDialogButtonBox::ActionRole);
     _buttonBox->addButton(_addButton, QDialogButtonBox::ActionRole);
     _buttonBox->addButton(_removeButton, QDialogButtonBox::ActionRole);
     _buttonBox->addButton(_submitButton, QDialogButtonBox::ActionRole);
