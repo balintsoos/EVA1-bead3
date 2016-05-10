@@ -143,6 +143,21 @@ void EditorDialog::submitButton_Clicked()
     }
 }
 
+void EditorDialog::filterAll()
+{
+    _model->setFilter("");
+}
+
+void EditorDialog::filterRent()
+{
+    _model->setFilter("id in (select movie_id from rent where DATE(start_date) <= NOW() and end_date IS NULL)");
+}
+
+void EditorDialog::filterStock()
+{
+    _model->setFilter("id not in (select movie_id from rent where DATE(start_date) <= NOW() and end_date IS NULL)");
+}
+
 void EditorDialog::setupModel()
 {
     _model = new MovieTableModel();
@@ -159,12 +174,20 @@ void EditorDialog::setupUi()
     _submitButton = new QPushButton("Submit");
     _revertButton = new QPushButton("Revert");
 
+    _filterAllButton = new QPushButton("All");
+    _filterRentButton = new QPushButton("Rented");
+    _filterStockButton = new QPushButton("In stock");
+
     _addButton->setFocusPolicy(Qt::NoFocus);
     _removeButton->setFocusPolicy(Qt::NoFocus);
     _rentButton->setFocusPolicy(Qt::NoFocus);
     _returnButton->setFocusPolicy(Qt::NoFocus);
     _submitButton->setFocusPolicy(Qt::NoFocus);
     _revertButton->setFocusPolicy(Qt::NoFocus);
+
+    _filterAllButton->setFocusPolicy(Qt::NoFocus);
+    _filterRentButton->setFocusPolicy(Qt::NoFocus);
+    _filterStockButton->setFocusPolicy(Qt::NoFocus);
 
     // Button Connect
     connect(_addButton, SIGNAL(clicked()), this, SLOT(addButton_Clicked()));
@@ -174,6 +197,10 @@ void EditorDialog::setupUi()
     connect(_submitButton, SIGNAL(clicked()), this, SLOT(submitButton_Clicked()));
     connect(_revertButton, SIGNAL(clicked()), _model, SLOT(revertAll()));
 
+    connect(_filterAllButton, SIGNAL(clicked()), this, SLOT(filterAll()));
+    connect(_filterRentButton, SIGNAL(clicked()), this, SLOT(filterRent()));
+    connect(_filterStockButton, SIGNAL(clicked()), this, SLOT(filterStock()));
+
     // Button Box
     _buttonBox = new QDialogButtonBox(Qt::Horizontal);
     _buttonBox->addButton(_rentButton, QDialogButtonBox::ActionRole);
@@ -182,6 +209,11 @@ void EditorDialog::setupUi()
     _buttonBox->addButton(_removeButton, QDialogButtonBox::ActionRole);
     _buttonBox->addButton(_submitButton, QDialogButtonBox::ActionRole);
     _buttonBox->addButton(_revertButton, QDialogButtonBox::ActionRole);
+
+    _filterBox = new QDialogButtonBox(Qt::Horizontal);
+    _filterBox->addButton(_filterAllButton, QDialogButtonBox::ActionRole);
+    _filterBox->addButton(_filterRentButton, QDialogButtonBox::ActionRole);
+    _filterBox->addButton(_filterStockButton, QDialogButtonBox::ActionRole);
 
     // View
     _tableView = new QTableView(this);
@@ -198,6 +230,7 @@ void EditorDialog::setupUi()
 
     // Layout
     _mainLayout = new QVBoxLayout;
+    _mainLayout->addWidget(_filterBox);
     _mainLayout->addWidget(_tableView);
     _mainLayout->addWidget(_buttonBox);
     setLayout(_mainLayout);

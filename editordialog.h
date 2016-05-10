@@ -26,6 +26,10 @@ private slots:
     void returnButton_Clicked();
     void submitButton_Clicked();
 
+    void filterAll();
+    void filterRent();
+    void filterStock();
+
 private:
     void setupModel();
     void setupUi();
@@ -41,6 +45,7 @@ private:
 
     // Button box
     QDialogButtonBox* _buttonBox;
+    QDialogButtonBox* _filterBox;
 
     // Buttons
     QPushButton* _addButton;
@@ -49,6 +54,10 @@ private:
     QPushButton* _returnButton;
     QPushButton* _submitButton;
     QPushButton* _revertButton;
+
+    QPushButton* _filterAllButton;
+    QPushButton* _filterRentButton;
+    QPushButton* _filterStockButton;
 
     // Layout
     QVBoxLayout* _mainLayout;
