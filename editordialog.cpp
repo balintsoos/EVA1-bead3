@@ -145,14 +145,37 @@ void EditorDialog::returnMovie(int movie)
             QDateTime start = query.value(0).toDateTime();
             QDateTime end = query.value(1).toDateTime();
 
-            QTime diff(0, 0, 0);
-            diff = diff.addSecs(start.secsTo(end));
-
-            QString format = "hh:mm";
-
-            QMessageBox::warning(this, "Movie returned", "Rental period: " + diff.toString(format));
+            seconds_to_DHMS(start.secsTo(end));
         }
     }
+}
+
+void EditorDialog::seconds_to_DHMS(quint32 duration)
+{
+    QString msg;
+    QString res;
+
+    int seconds = (int) (duration % 60);
+    duration /= 60;
+
+    int minutes = (int) (duration % 60);
+    duration /= 60;
+
+    int hours = (int) (duration % 24);
+    int days = (int) (duration / 24);
+
+    if (days >= 1)
+    {
+        msg = "Dept: ";
+        res = res.sprintf("%dd %02d:%02d:%02d", days - 1, hours, minutes, seconds);
+    }
+    else
+    {
+        msg = "Rental period: ";
+        res = res.sprintf("%dd %02d:%02d:%02d", days, hours, minutes, seconds);
+    }
+
+    QMessageBox::warning(this, "Movie returned", msg + res);
 }
 
 void EditorDialog::submitButton_Clicked()

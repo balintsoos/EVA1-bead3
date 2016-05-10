@@ -36,6 +36,7 @@ private:
     void setupUi();
 
     void returnMovie(int movie);
+    void seconds_to_DHMS(quint32 duration);
 
     // Model
     MovieTableModel* _model;
