@@ -111,19 +111,47 @@ void EditorDialog::returnButton_Clicked()
             return;
         }
 
-        // Return
         int movie = _model->data(_model->index(index.row(), 0)).toInt();
-
-        QSqlQuery query;
-        query.prepare("UPDATE rent SET end_date = NOW() WHERE end_date IS NULL and movie_id = :movie");
-
-        query.bindValue(":movie", movie);
-
-        query.exec();
+        returnMovie(movie);
     }
     else
     {
         QMessageBox::warning(this, "No selection", "Select a row before clicking on return");
+    }
+}
+
+void EditorDialog::returnMovie(int movie)
+{
+    QSqlQuery query;
+
+    query.prepare("select rent_id from rent where DATE(start_date) <= NOW() and end_date IS NULL and movie_id = :movie");
+    query.bindValue(":movie", movie);
+    query.exec();
+
+    if (query.next())
+    {
+        int id = query.value(0).toInt();
+
+        query.prepare("UPDATE rent SET end_date = NOW() WHERE rent_id = :id");
+        query.bindValue(":id", id);
+        query.exec();
+
+        query.prepare("select start_date, end_date from rent WHERE rent_id = :id");
+        query.bindValue(":id", id);
+        query.exec();
+
+        if (query.next())
+        {
+            QDateTime start = query.value(0).toDateTime();
+            QDateTime end = query.value(1).toDateTime();
+
+            QTime diff(0, 0, 0);
+            diff = diff.addSecs(start.secsTo(end));
+
+            QString format = "hh:mm";
+
+            QMessageBox::warning(this, "Movie returned", "Rental period: " + diff.toString(format));
+        }
     }
 }
 

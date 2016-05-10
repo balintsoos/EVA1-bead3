@@ -23,8 +23,8 @@ CREATE TABLE rent(
   rent_id INTEGER PRIMARY KEY AUTO_INCREMENT,
   member_id INTEGER,
   movie_id INTEGER,
-  start_date Date,
-  end_date Date,
+  start_date DATETIME,
+  end_date DATETIME,
   CONSTRAINT renttomember
     FOREIGN KEY (member_id)
     REFERENCES member (id),

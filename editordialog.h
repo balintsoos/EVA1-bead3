@@ -2,6 +2,7 @@
 #define EDITORDIALOG_H
 
 #include <QDialog>
+#include <QDateTime>
 #include <QSqlRecord>
 #include <QTableView>
 #include <QVBoxLayout>
@@ -33,6 +34,8 @@ private slots:
 private:
     void setupModel();
     void setupUi();
+
+    void returnMovie(int movie);
 
     // Model
     MovieTableModel* _model;
